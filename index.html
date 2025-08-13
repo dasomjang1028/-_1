@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>제철음식 추천 달력</title>
+  <meta name="description" content="월/지역 기준 제철 식재료를 추천하고 영양·레시피·구매처 정보를 제공합니다." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="wrap">
+    <h1>🍊 제철음식 추천 달력</h1>
+    <p class="sub">월 · 지역 · 종류 필터로 제철 식재료를 빠르게 찾고, 즐겨찾기/공유하세요.</p>
+  </header>
+
+  <main class="wrap">
+    <section class="controls">
+      <label>
+        월
+        <select id="monthSelect" aria-label="월 선택">
+          <option value="auto">이번 달(자동)</option>
+          <option value="1">1월</option><option value="2">2월</option>
+          <option value="3">3월</option><option value="4">4월</option>
+          <option value="5">5월</option><option value="6">6월</option>
+          <option value="7">7월</option><option value="8">8월</option>
+          <option value="9">9월</option><option value="10">10월</option>
+          <option value="11">11월</option><option value="12">12월</option>
+        </select>
+      </label>
+
+      <label>
+        지역
+        <select id="regionSelect" aria-label="지역 선택">
+          <option value="KR-all">전국</option>
+          <option value="KR-Jeju">제주</option>
+          <option value="KR-WestSea">서해</option>
+          <option value="KR-SouthSea">남해</option>
+          <option value="KR-EastSea">동해</option>
+        </select>
+      </label>
+
+      <fieldset class="filters">
+        <legend>종류</legend>
+        <label><input type="checkbox" class="typeChk" value="fruit" checked /> 과일</label>
+        <label><input type="checkbox" class="typeChk" value="veg" checked /> 채소</label>
+        <label><input type="checkbox" class="typeChk" value="seafood" checked /> 해산물</label>
+      </fieldset>
+
+      <label class="search">
+        검색
+        <input type="text" id="q" placeholder="예: 방울토마토, 전복…" />
+      </label>
+
+      <div class="actions">
+        <button id="btnToday">이번 달로</button>
+        <button id="btnFavs">⭐ 즐겨찾기 보기</button>
+        <button id="btnShare" title="현재 조건 공유">공유 링크 복사</button>
+      </div>
+    </section>
+
+    <section>
+      <h2 id="title"></h2>
+      <ul id="list" class="grid" aria-live="polite"></ul>
+      <p id="empty" class="empty" hidden>조건에 맞는 식재료가 없어요.</p>
+    </section>
+  </main>
+
+  <footer class="wrap foot">
+    <small>ⓒ 제철음식 캘린더 · 로그인/서버 없이 로컬 저장</small>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
