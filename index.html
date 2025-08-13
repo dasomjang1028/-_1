@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>Seasonal - 가게</title>
+  <title>Seasonal - 제철음식 가이드</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
   <style>
@@ -61,10 +61,10 @@
       background: var(--main-bg);
     }
     
-    .page-title {
-      font-size: 24px;
-      font-weight: 700;
-      color: #333;
+    .app-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--accent-color);
       margin-bottom: 15px;
       text-align: center;
     }
@@ -98,122 +98,198 @@
       color: #999;
     }
     
-    /* 필터 버튼 */
-    .filter-buttons {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      overflow-x: auto;
-      padding: 0 20px;
-    }
-    
-    .filter-btn {
-      background: white;
-      border: 1px solid #e0e0e0;
-      border-radius: 20px;
-      padding: 8px 16px;
-      font-size: 14px;
-      color: #666;
+    .camera-icon {
+      color: var(--accent-color);
+      font-size: 20px;
       cursor: pointer;
-      transition: all 0.3s ease;
-      white-space: nowrap;
+      margin-left: 10px;
     }
     
-    .filter-btn.active {
-      background: var(--accent-color);
+    /* 메인 배너 */
+    .main-banner {
+      margin: 0 20px 20px 20px;
+      background: linear-gradient(135deg, #FF8A65, #FF6B35);
+      border-radius: 20px;
+      padding: 25px;
       color: white;
-      border-color: var(--accent-color);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
     }
     
-    /* 가게 카드 */
-    .store-list {
-      padding: 0 20px 100px 20px;
+    .banner-bg {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 150px;
+      height: 150px;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.1)"/></svg>') no-repeat;
+      opacity: 0.3;
     }
     
-    .store-item {
+    .week-selector {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 8px 15px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+    }
+    
+    .week-selector::after {
+      content: "▼";
+      margin-left: 8px;
+      font-size: 12px;
+    }
+    
+    .banner-title {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    
+    /* 섹션 카드 */
+    .section-card {
       background: white;
       border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 15px;
+      padding: 25px;
+      margin: 0 20px 20px 20px;
       box-shadow: var(--shadow);
+    }
+    
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent-color);
+      margin-bottom: 15px;
+    }
+    
+    .section-subtitle {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    
+    /* Best Store 섹션 */
+    .store-cards {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .store-card {
+      flex: 1;
+      background: #f9f9f9;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      position: relative;
       cursor: pointer;
       transition: transform 0.2s ease;
     }
     
-    .store-item:hover {
-      transform: translateY(-2px);
+    .store-card:hover {
+      transform: translateY(-3px);
     }
     
-    .store-header {
+    .store-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
-      margin-bottom: 15px;
+      justify-content: center;
+      font-size: 12px;
+      color: white;
+    }
+    
+    .store-badge.check {
+      background: #4CAF50;
+    }
+    
+    .store-badge.mountain {
+      background: #2196F3;
     }
     
     .store-image {
       width: 60px;
       height: 60px;
-      background: #f0f0f0;
-      border-radius: 12px;
-      margin-right: 15px;
+      background: #e0e0e0;
+      border-radius: 8px;
+      margin: 0 auto 10px auto;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 24px;
     }
     
-    .store-info {
-      flex: 1;
-    }
-    
     .store-name {
-      font-size: 18px;
-      font-weight: 700;
-      color: #333;
-      margin-bottom: 5px;
-    }
-    
-    .store-category {
       font-size: 14px;
-      color: var(--accent-color);
-      margin-bottom: 5px;
+      font-weight: 600;
+      color: #333;
     }
     
-    .store-rating {
+    .vote-btn {
+      width: 100%;
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 15px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    
+    .vote-btn:hover {
+      background: var(--accent-light);
+    }
+    
+    /* Coming Soon 섹션 */
+    .coming-soon-images {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .coming-soon-image {
+      flex: 1;
+      height: 120px;
+      background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+      border-radius: 12px;
       display: flex;
       align-items: center;
-      gap: 5px;
-    }
-    
-    .stars {
-      color: #FFD700;
+      justify-content: center;
+      color: #999;
       font-size: 14px;
+      position: relative;
+      overflow: hidden;
     }
     
-    .rating-text {
-      font-size: 14px;
-      color: #666;
+    .coming-soon-image::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+      animation: shimmer 2s infinite;
     }
     
-    .store-description {
-      font-size: 14px;
-      color: #666;
-      line-height: 1.5;
-      margin-bottom: 15px;
-    }
-    
-    .store-tags {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    
-    .tag {
-      background: #f0f0f0;
-      color: #666;
-      padding: 4px 8px;
-      border-radius: 12px;
-      font-size: 12px;
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
     }
     
     /* 하단 네비게이션 */
@@ -265,12 +341,18 @@
         max-width: 100%;
       }
       
-      .store-list {
-        padding: 0 15px 100px 15px;
+      .main-banner {
+        margin: 0 15px 15px 15px;
+        padding: 20px;
       }
       
-      .filter-buttons {
-        padding: 0 15px;
+      .section-card {
+        margin: 0 15px 15px 15px;
+        padding: 20px;
+      }
+      
+      .banner-title {
+        font-size: 20px;
       }
     }
   </style>
@@ -288,121 +370,61 @@
   
   <!-- 헤더 -->
   <div class="header">
-    <div class="page-title">가게</div>
+    <div class="app-title">Seasonal</div>
     <div class="search-container">
       <div class="search-icon">🔍</div>
-      <input type="text" class="search-input" placeholder="가게 검색하기">
+      <input type="text" class="search-input" placeholder="2월 제철음식 찾기">
+      <div class="camera-icon">📷</div>
     </div>
   </div>
   
-  <!-- 필터 버튼 -->
-  <div class="filter-buttons">
-    <div class="filter-btn active" onclick="filterStores('all')">전체</div>
-    <div class="filter-btn" onclick="filterStores('korean')">한식</div>
-    <div class="filter-btn" onclick="filterStores('japanese')">일식</div>
-    <div class="filter-btn" onclick="filterStores('chinese')">중식</div>
-    <div class="filter-btn" onclick="filterStores('western')">양식</div>
-    <div class="filter-btn" onclick="filterStores('cafe')">카페</div>
+  <!-- 메인 배너 -->
+  <div class="main-banner">
+    <div class="banner-bg"></div>
+    <div class="week-selector" onclick="toggleWeekSelector()">11월 3주차</div>
+    <div class="banner-title">춥지만 달달한 딸기의 계절!</div>
   </div>
   
-  <!-- 가게 목록 -->
-  <div class="store-list">
-    <div class="store-item" onclick="goToStoreDetail('oroti')">
-      <div class="store-header">
+  <!-- Best Store 섹션 -->
+  <div class="section-card">
+    <div class="section-title">Best Store</div>
+    <div class="section-subtitle">우리 동네 방어집! 여기가 찐이다?</div>
+    
+    <div class="store-cards">
+      <div class="store-card" onclick="goToStore('oroti')">
+        <div class="store-badge check">✓</div>
         <div class="store-image">🍣</div>
-        <div class="store-info">
-          <div class="store-name">오롯이 스시</div>
-          <div class="store-category">일식 • 스시</div>
-          <div class="store-rating">
-            <div class="stars">⭐⭐⭐⭐⭐</div>
-            <div class="rating-text">4.8 (127)</div>
-          </div>
-        </div>
+        <div class="store-name">오롯이 스시</div>
       </div>
-      <div class="store-description">
-        신선한 재료로 만드는 정통 스시 전문점입니다. 매일 아침 입고되는 신선한 생선으로 최고의 맛을 선사합니다.
-      </div>
-      <div class="store-tags">
-        <div class="tag">신선한 재료</div>
-        <div class="tag">정통 스시</div>
-        <div class="tag">예약 가능</div>
-      </div>
-    </div>
-    
-    <div class="store-item" onclick="goToStoreDetail('dandachi')">
-      <div class="store-header">
+      
+      <div class="store-card" onclick="goToStore('dandachi')">
+        <div class="store-badge mountain">🏔️</div>
         <div class="store-image">🍣</div>
-        <div class="store-info">
-          <div class="store-name">단 다찌 스시</div>
-          <div class="store-category">일식 • 스시</div>
-          <div class="store-rating">
-            <div class="stars">⭐⭐⭐⭐⭐</div>
-            <div class="rating-text">4.6 (89)</div>
-          </div>
-        </div>
-      </div>
-      <div class="store-description">
-        창의적인 스시 조합과 현대적인 분위기가 어우러진 트렌디한 스시바입니다.
-      </div>
-      <div class="store-tags">
-        <div class="tag">창의적 조합</div>
-        <div class="tag">트렌디</div>
-        <div class="tag">와인 페어링</div>
+        <div class="store-name">단 다찌 스시</div>
       </div>
     </div>
     
-    <div class="store-item" onclick="goToStoreDetail('whitebrix')">
-      <div class="store-header">
-        <div class="store-image">🍰</div>
-        <div class="store-info">
-          <div class="store-name">화이트 브릭스</div>
-          <div class="store-category">카페 • 베이커리</div>
-          <div class="store-rating">
-            <div class="stars">⭐⭐⭐⭐⭐</div>
-            <div class="rating-text">4.7 (156)</div>
-          </div>
-        </div>
-      </div>
-      <div class="store-description">
-        2017년 성수동에 오픈한 건강한 식사를 선보이는 베이커리 카페입니다.
-      </div>
-      <div class="store-tags">
-        <div class="tag">건강한 식사</div>
-        <div class="tag">베이커리</div>
-        <div class="tag">브런치</div>
-      </div>
-    </div>
+    <button class="vote-btn" onclick="voteForStore()">투표하기</button>
+  </div>
+  
+  <!-- Coming Soon 섹션 -->
+  <div class="section-card">
+    <div class="section-title">Coming Soon</div>
+    <div class="section-subtitle">미리보는 12월 제철 메뉴</div>
     
-    <div class="store-item" onclick="goToStoreDetail('bruxie')">
-      <div class="store-header">
-        <div class="store-image">🧀</div>
-        <div class="store-info">
-          <div class="store-name">브럭시</div>
-          <div class="store-category">카페 • 케이크</div>
-          <div class="store-rating">
-            <div class="stars">⭐⭐⭐⭐⭐</div>
-            <div class="rating-text">4.5 (203)</div>
-          </div>
-        </div>
-      </div>
-      <div class="store-description">
-        과즙이 흘러넘치는 과일과 고소한 버터번이 매력적인 정통 케이크 브랜드입니다.
-      </div>
-      <div class="store-tags">
-        <div class="tag">정통 케이크</div>
-        <div class="tag">과일 케이크</div>
-        <div class="tag">디저트</div>
-      </div>
+    <div class="coming-soon-images">
+      <div class="coming-soon-image">파스타</div>
+      <div class="coming-soon-image">햄버거</div>
     </div>
   </div>
   
   <!-- 하단 네비게이션 -->
   <div class="bottom-nav">
-    <a href="index.html" class="nav-item">
+    <a href="index.html" class="nav-item active">
       <div class="nav-icon">🏠</div>
       <div class="nav-text">홈</div>
     </a>
-    <a href="store.html" class="nav-item active">
+    <a href="store.html" class="nav-item">
       <div class="nav-icon">📍</div>
       <div class="nav-text">가게</div>
     </a>
@@ -421,22 +443,25 @@
   </div>
 
   <script>
-    // 필터 기능
-    function filterStores(category) {
-      // 필터 버튼 활성화 상태 변경
-      document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.classList.remove('active');
-      });
-      event.target.classList.add('active');
-      
-      // 실제 필터링 로직 (현재는 알림만 표시)
-      alert(`${category} 카테고리로 필터링됩니다!`);
+    // 주차 선택기 토글
+    function toggleWeekSelector() {
+      const weeks = ['11월 1주차', '11월 2주차', '11월 3주차', '11월 4주차'];
+      const currentWeek = document.querySelector('.week-selector');
+      const randomWeek = weeks[Math.floor(Math.random() * weeks.length)];
+      currentWeek.textContent = randomWeek + ' ▼';
     }
     
-    // 가게 상세 페이지로 이동
-    function goToStoreDetail(storeName) {
-      alert(`${storeName} 상세 페이지로 이동합니다!`);
+    // 가게 페이지로 이동
+    function goToStore(storeName) {
+      alert(`${storeName === 'oroti' ? '오롯이 스시' : '단 다찌 스시'} 페이지로 이동합니다!`);
       // 실제로는 window.location.href = `store-detail.html?store=${storeName}`; 사용
+    }
+    
+    // 투표 기능
+    function voteForStore() {
+      const stores = ['오롯이 스시', '단 다찌 스시'];
+      const randomStore = stores[Math.floor(Math.random() * stores.length)];
+      alert(`${randomStore}에 투표했습니다! 🎉`);
     }
     
     // 검색 기능
@@ -447,6 +472,24 @@
           alert(`"${searchTerm}" 검색 결과를 보여드립니다!`);
         }
       }
+    });
+    
+    // 카메라 아이콘 클릭
+    document.querySelector('.camera-icon').addEventListener('click', function() {
+      alert('카메라 기능이 실행됩니다! 📷');
+    });
+    
+    // 네비게이션 활성화 상태 관리
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', function(e) {
+        // 현재 페이지가 아닌 경우에만 처리
+        if (!this.classList.contains('active')) {
+          document.querySelectorAll('.nav-item').forEach(nav => {
+            nav.classList.remove('active');
+          });
+          this.classList.add('active');
+        }
+      });
     });
   </script>
 </body>
