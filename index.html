@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>Seasonal - 달력</title>
+  <title>Seasonal - 제철음식 가이드</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
   <style>
@@ -61,152 +61,235 @@
       background: var(--main-bg);
     }
     
-    .page-title {
-      font-size: 24px;
-      font-weight: 700;
-      color: #333;
+    .app-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--accent-color);
       margin-bottom: 15px;
       text-align: center;
     }
     
-    /* 달력 네비게이션 */
-    .calendar-nav {
+    .search-container {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      background: white;
+      border-radius: 25px;
+      padding: 12px 20px;
+      box-shadow: var(--shadow);
       margin-bottom: 20px;
     }
     
-    .nav-btn {
+    .search-icon {
+      color: #999;
+      margin-right: 10px;
+      font-size: 18px;
+    }
+    
+    .search-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      color: #333;
+      background: transparent;
+    }
+    
+    .search-input::placeholder {
+      color: #999;
+    }
+    
+    .camera-icon {
+      color: var(--accent-color);
+      font-size: 20px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    
+    /* 메인 배너 */
+    .main-banner {
+      margin: 0 20px 20px 20px;
+      background: linear-gradient(135deg, #FF8A65, #FF6B35);
+      border-radius: 20px;
+      padding: 25px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    
+    .banner-bg {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 150px;
+      height: 150px;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.1)"/></svg>') no-repeat;
+      opacity: 0.3;
+    }
+    
+    .week-selector {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 8px 15px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+    }
+    
+    .week-selector::after {
+      content: "▼";
+      margin-left: 8px;
+      font-size: 12px;
+    }
+    
+    .banner-title {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    
+    /* 섹션 카드 */
+    .section-card {
+      background: white;
+      border-radius: 16px;
+      padding: 25px;
+      margin: 0 20px 20px 20px;
+      box-shadow: var(--shadow);
+    }
+    
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent-color);
+      margin-bottom: 15px;
+    }
+    
+    .section-subtitle {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    
+    /* Best Store 섹션 */
+    .store-cards {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .store-card {
+      flex: 1;
+      background: #f9f9f9;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    
+    .store-card:hover {
+      transform: translateY(-3px);
+    }
+    
+    .store-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: white;
+    }
+    
+    .store-badge.check {
+      background: #4CAF50;
+    }
+    
+    .store-badge.mountain {
+      background: #2196F3;
+    }
+    
+    .store-image {
+      width: 60px;
+      height: 60px;
+      background: #e0e0e0;
+      border-radius: 8px;
+      margin: 0 auto 10px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    
+    .store-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+    }
+    
+    .vote-btn {
+      width: 100%;
       background: var(--accent-color);
       color: white;
       border: none;
-      border-radius: 8px;
-      padding: 8px 16px;
-      font-size: 14px;
+      border-radius: 12px;
+      padding: 15px;
+      font-size: 16px;
+      font-weight: 600;
       cursor: pointer;
       transition: background 0.3s ease;
     }
     
-    .nav-btn:hover {
+    .vote-btn:hover {
       background: var(--accent-light);
     }
     
-    .current-month {
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--accent-color);
-    }
-    
-    /* 달력 */
-    .calendar-container {
-      background: white;
-      border-radius: 16px;
-      padding: 20px;
-      margin: 0 20px 20px 20px;
-      box-shadow: var(--shadow);
-    }
-    
-    .calendar {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    
-    .calendar th {
-      background: var(--accent-color);
-      color: white;
-      padding: 12px 8px;
-      text-align: center;
-      font-weight: 600;
-      font-size: 14px;
-    }
-    
-    .calendar td {
-      border: 1px solid #e0e0e0;
-      padding: 12px 8px;
-      text-align: center;
-      cursor: pointer;
-      transition: background 0.2s ease;
-      position: relative;
-      font-size: 14px;
-    }
-    
-    .calendar td:hover {
-      background: #f0f8f0;
-    }
-    
-    .calendar td.today {
-      background: var(--accent-light);
-      color: white;
-      font-weight: bold;
-    }
-    
-    .calendar td.other-month {
-      color: #ccc;
-    }
-    
-    .calendar td.has-food {
-      background: #fff3e0;
-      font-weight: 600;
-    }
-    
-    .calendar td.has-food::after {
-      content: "🍎";
-      position: absolute;
-      bottom: 2px;
-      right: 2px;
-      font-size: 10px;
-    }
-    
-    /* 제철음식 정보 */
-    .seasonal-info {
-      background: white;
-      border-radius: 16px;
-      padding: 20px;
-      margin: 0 20px 20px 20px;
-      box-shadow: var(--shadow);
-    }
-    
-    .info-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--accent-color);
-      margin-bottom: 15px;
-    }
-    
-    .food-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    /* Coming Soon 섹션 */
+    .coming-soon-images {
+      display: flex;
       gap: 15px;
+      margin-bottom: 20px;
     }
     
-    .food-item {
-      text-align: center;
-      padding: 15px;
-      background: #f9f9f9;
+    .coming-soon-image {
+      flex: 1;
+      height: 120px;
+      background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
       border-radius: 12px;
-      transition: transform 0.2s ease;
-    }
-    
-    .food-item:hover {
-      transform: translateY(-2px);
-    }
-    
-    .food-icon {
-      font-size: 32px;
-      margin-bottom: 8px;
-    }
-    
-    .food-name {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
       font-size: 14px;
-      font-weight: 600;
-      color: #333;
-      margin-bottom: 5px;
+      position: relative;
+      overflow: hidden;
     }
     
-    .food-season {
-      font-size: 12px;
-      color: var(--accent-color);
+    .coming-soon-image::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+      animation: shimmer 2s infinite;
+    }
+    
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
     }
     
     /* 하단 네비게이션 */
@@ -258,16 +341,18 @@
         max-width: 100%;
       }
       
-      .calendar-container,
-      .seasonal-info {
+      .main-banner {
         margin: 0 15px 15px 15px;
-        padding: 15px;
+        padding: 20px;
       }
       
-      .calendar td,
-      .calendar th {
-        padding: 8px 4px;
-        font-size: 12px;
+      .section-card {
+        margin: 0 15px 15px 15px;
+        padding: 20px;
+      }
+      
+      .banner-title {
+        font-size: 20px;
       }
     }
   </style>
@@ -285,74 +370,57 @@
   
   <!-- 헤더 -->
   <div class="header">
-    <div class="page-title">달력</div>
+    <div class="app-title">Seasonal</div>
+    <div class="search-container">
+      <div class="search-icon">🔍</div>
+      <input type="text" class="search-input" placeholder="2월 제철음식 찾기">
+      <div class="camera-icon">📷</div>
+    </div>
   </div>
   
-  <!-- 달력 -->
-  <div class="calendar-container">
-    <div class="calendar-nav">
-      <button class="nav-btn" onclick="previousMonth()">◀ 이전</button>
-      <div class="current-month" id="currentMonth">2024년 11월</div>
-      <button class="nav-btn" onclick="nextMonth()">다음 ▶</button>
+  <!-- 메인 배너 -->
+  <div class="main-banner">
+    <div class="banner-bg"></div>
+    <div class="week-selector" onclick="toggleWeekSelector()">11월 3주차</div>
+    <div class="banner-title">춥지만 달달한 딸기의 계절!</div>
+  </div>
+  
+  <!-- Best Store 섹션 -->
+  <div class="section-card">
+    <div class="section-title">Best Store</div>
+    <div class="section-subtitle">우리 동네 방어집! 여기가 찐이다?</div>
+    
+    <div class="store-cards">
+      <div class="store-card" onclick="goToStore('oroti')">
+        <div class="store-badge check">✓</div>
+        <div class="store-image">🍣</div>
+        <div class="store-name">오롯이 스시</div>
+      </div>
+      
+      <div class="store-card" onclick="goToStore('dandachi')">
+        <div class="store-badge mountain">🏔️</div>
+        <div class="store-image">🍣</div>
+        <div class="store-name">단 다찌 스시</div>
+      </div>
     </div>
     
-    <table class="calendar" id="calendar">
-      <thead>
-        <tr>
-          <th>일</th>
-          <th>월</th>
-          <th>화</th>
-          <th>수</th>
-          <th>목</th>
-          <th>금</th>
-          <th>토</th>
-        </tr>
-      </thead>
-      <tbody id="calendarBody">
-      </tbody>
-    </table>
+    <button class="vote-btn" onclick="voteForStore()">투표하기</button>
   </div>
   
-  <!-- 제철음식 정보 -->
-  <div class="seasonal-info">
-    <div class="info-title">🍎 11월 제철음식</div>
-    <div class="food-grid">
-      <div class="food-item">
-        <div class="food-icon">🍊</div>
-        <div class="food-name">귤</div>
-        <div class="food-season">11월 제철</div>
-      </div>
-      <div class="food-item">
-        <div class="food-icon">🍐</div>
-        <div class="food-name">배</div>
-        <div class="food-season">11월 제철</div>
-      </div>
-      <div class="food-item">
-        <div class="food-icon">🍊</div>
-        <div class="food-name">단감</div>
-        <div class="food-season">11월 제철</div>
-      </div>
-      <div class="food-item">
-        <div class="food-icon">🥕</div>
-        <div class="food-name">무</div>
-        <div class="food-season">11월 제철</div>
-      </div>
-      <div class="food-item">
-        <div class="food-icon">🥬</div>
-        <div class="food-name">배추</div>
-        <div class="food-season">11월 제철</div>
-      </div>
-      <div class="food-item">
-        <div class="food-icon">🧅</div>
-        <div class="food-name">양파</div>
-        <div class="food-season">11월 제철</div>
-      </div>
+  <!-- Coming Soon 섹션 -->
+  <div class="section-card">
+    <div class="section-title">Coming Soon</div>
+    <div class="section-subtitle">미리보는 12월 제철 메뉴</div>
+    
+    <div class="coming-soon-images">
+      <div class="coming-soon-image">파스타</div>
+      <div class="coming-soon-image">햄버거</div>
     </div>
   </div>
   
   <!-- 하단 네비게이션 -->
   <div class="bottom-nav">
-    <a href="index.html" class="nav-item">
+    <a href="index.html" class="nav-item active">
       <div class="nav-icon">🏠</div>
       <div class="nav-text">홈</div>
     </a>
@@ -360,7 +428,7 @@
       <div class="nav-icon">📍</div>
       <div class="nav-text">가게</div>
     </a>
-    <a href="calendar.html" class="nav-item active">
+    <a href="calendar.html" class="nav-item">
       <div class="nav-icon">📅</div>
       <div class="nav-text">달력</div>
     </a>
@@ -375,134 +443,54 @@
   </div>
 
   <script>
-    let currentDate = new Date();
-    let currentMonth = currentDate.getMonth();
-    let currentYear = currentDate.getFullYear();
+    // 주차 선택기 토글
+    function toggleWeekSelector() {
+      const weeks = ['11월 1주차', '11월 2주차', '11월 3주차', '11월 4주차'];
+      const currentWeek = document.querySelector('.week-selector');
+      const randomWeek = weeks[Math.floor(Math.random() * weeks.length)];
+      currentWeek.textContent = randomWeek + ' ▼';
+    }
     
-    // 제철음식 데이터
-    const seasonalFoods = {
-      0: ["귤", "배", "단감"], // 1월
-      1: ["딸기", "미나리", "우엉"], // 2월
-      2: ["봄나물", "달래", "쑥"], // 3월
-      3: ["참나물", "두릅", "취나물"], // 4월
-      4: ["체리", "아스파라거스", "새싹채소"], // 5월
-      5: ["복숭아", "오이", "가지"], // 6월
-      6: ["수박", "참외", "옥수수"], // 7월
-      7: ["포도", "복분자", "고구마"], // 8월
-      8: ["사과", "배", "무"], // 9월
-      9: ["감", "고구마", "단호박"], // 10월
-      10: ["귤", "배", "무"], // 11월
-      11: ["귤", "배", "단감"] // 12월
-    };
+    // 가게 페이지로 이동
+    function goToStore(storeName) {
+      alert(`${storeName === 'oroti' ? '오롯이 스시' : '단 다찌 스시'} 페이지로 이동합니다!`);
+      // 실제로는 window.location.href = `store-detail.html?store=${storeName}`; 사용
+    }
     
-    // 달력 생성 함수
-    function generateCalendar(year, month) {
-      const firstDay = new Date(year, month, 1);
-      const lastDay = new Date(year, month + 1, 0);
-      const startDate = new Date(firstDay);
-      startDate.setDate(startDate.getDate() - firstDay.getDay());
-      
-      const calendarBody = document.getElementById('calendarBody');
-      calendarBody.innerHTML = '';
-      
-      const currentMonthText = document.getElementById('currentMonth');
-      const monthNames = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
-      currentMonthText.textContent = `${year}년 ${monthNames[month]}`;
-      
-      let currentRow = document.createElement('tr');
-      
-      for (let i = 0; i < 42; i++) {
-        const currentDate = new Date(startDate);
-        currentDate.setDate(startDate.getDate() + i);
-        
-        if (i % 7 === 0 && i !== 0) {
-          calendarBody.appendChild(currentRow);
-          currentRow = document.createElement('tr');
+    // 투표 기능
+    function voteForStore() {
+      const stores = ['오롯이 스시', '단 다찌 스시'];
+      const randomStore = stores[Math.floor(Math.random() * stores.length)];
+      alert(`${randomStore}에 투표했습니다! 🎉`);
+    }
+    
+    // 검색 기능
+    document.querySelector('.search-input').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        const searchTerm = this.value;
+        if (searchTerm.trim()) {
+          alert(`"${searchTerm}" 검색 결과를 보여드립니다!`);
         }
-        
-        const cell = document.createElement('td');
-        cell.textContent = currentDate.getDate();
-        
-        // 오늘 날짜 표시
-        const today = new Date();
-        if (currentDate.toDateString() === today.toDateString()) {
-          cell.classList.add('today');
+      }
+    });
+    
+    // 카메라 아이콘 클릭
+    document.querySelector('.camera-icon').addEventListener('click', function() {
+      alert('카메라 기능이 실행됩니다! 📷');
+    });
+    
+    // 네비게이션 활성화 상태 관리
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', function(e) {
+        // 현재 페이지가 아닌 경우에만 처리
+        if (!this.classList.contains('active')) {
+          document.querySelectorAll('.nav-item').forEach(nav => {
+            nav.classList.remove('active');
+          });
+          this.classList.add('active');
         }
-        
-        // 다른 달의 날짜 표시
-        if (currentDate.getMonth() !== month) {
-          cell.classList.add('other-month');
-        }
-        
-        // 제철음식이 있는 날짜 표시
-        const foods = seasonalFoods[month];
-        if (foods && foods.length > 0) {
-          cell.classList.add('has-food');
-          cell.title = `제철음식: ${foods.join(', ')}`;
-        }
-        
-        // 날짜 클릭 이벤트
-        cell.onclick = function() {
-          showDateInfo(currentDate, foods);
-        };
-        
-        currentRow.appendChild(cell);
-      }
-      
-      calendarBody.appendChild(currentRow);
-    }
-    
-    // 날짜 정보 표시
-    function showDateInfo(date, foods) {
-      const monthNames = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
-      const dayNames = ['일', '월', '화', '수', '목', '금', '토'];
-      
-      let message = `${date.getFullYear()}년 ${monthNames[date.getMonth()]} ${date.getDate()}일 (${dayNames[date.getDay()]})`;
-      
-      if (foods && foods.length > 0) {
-        message += `\n\n🍎 제철음식: ${foods.join(', ')}`;
-      } else {
-        message += '\n\n이 날은 특별한 제철음식이 없습니다.';
-      }
-      
-      alert(message);
-    }
-    
-    // 이전 달
-    function previousMonth() {
-      currentMonth--;
-      if (currentMonth < 0) {
-        currentMonth = 11;
-        currentYear--;
-      }
-      generateCalendar(currentYear, currentMonth);
-      updateSeasonalInfo(currentMonth);
-    }
-    
-    // 다음 달
-    function nextMonth() {
-      currentMonth++;
-      if (currentMonth > 11) {
-        currentMonth = 0;
-        currentYear++;
-      }
-      generateCalendar(currentYear, currentMonth);
-      updateSeasonalInfo(currentMonth);
-    }
-    
-    // 제철음식 정보 업데이트
-    function updateSeasonalInfo(month) {
-      const monthNames = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
-      const infoTitle = document.querySelector('.info-title');
-      infoTitle.textContent = `🍎 ${monthNames[month]} 제철음식`;
-      
-      // 실제로는 여기서 해당 월의 제철음식 데이터를 동적으로 업데이트
-    }
-    
-    // 초기화
-    window.onload = function() {
-      generateCalendar(currentYear, currentMonth);
-    };
+      });
+    });
   </script>
 </body>
-</html> 
+</html>
