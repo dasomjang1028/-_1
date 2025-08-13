@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>제철음식 안내</title>
+  <title>Seasonal - 가게</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
   <style>
@@ -57,285 +57,142 @@
     
     /* 헤더 */
     .header {
-      display: flex;
-      align-items: center;
-      padding: 15px 20px;
+      padding: 20px;
       background: var(--main-bg);
-      position: relative;
     }
     
-    .back-btn {
-      background: none;
-      border: none;
-      font-size: 20px;
-      cursor: pointer;
-      color: #333;
-      margin-right: 15px;
-    }
-    
-    .header-title {
-      font-size: 18px;
+    .page-title {
+      font-size: 24px;
       font-weight: 700;
       color: #333;
-      flex: 1;
+      margin-bottom: 15px;
       text-align: center;
     }
     
-    /* 메인 배너 */
-    .main-banner {
-      margin: 20px;
-      background: linear-gradient(135deg, #FF8A65, #FF6B35);
-      border-radius: 20px;
-      padding: 25px;
-      color: white;
-      position: relative;
-      overflow: hidden;
+    .search-container {
+      display: flex;
+      align-items: center;
+      background: white;
+      border-radius: 25px;
+      padding: 12px 20px;
       box-shadow: var(--shadow);
+      margin-bottom: 20px;
     }
     
-    .banner-bg {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 150px;
-      height: 150px;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.1)"/></svg>') no-repeat;
-      opacity: 0.3;
+    .search-icon {
+      color: #999;
+      margin-right: 10px;
+      font-size: 18px;
     }
     
-    .week-selector {
-      display: inline-flex;
-      align-items: center;
-      background: rgba(255,255,255,0.2);
-      border-radius: 20px;
-      padding: 8px 15px;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 15px;
-      backdrop-filter: blur(10px);
-    }
-    
-    .week-selector::after {
-      content: "▼";
-      margin-left: 8px;
-      font-size: 12px;
-    }
-    
-    .banner-title {
-      font-size: 24px;
-      font-weight: 800;
-      margin-bottom: 10px;
-      line-height: 1.3;
-    }
-    
-    .banner-date {
-      font-size: 16px;
-      opacity: 0.9;
-      font-weight: 500;
-    }
-    
-    /* 리워드 섹션 */
-    .reward-section {
-      margin: 0 20px 20px 20px;
-      background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
-      border-radius: 16px;
-      padding: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: var(--shadow);
-    }
-    
-    .reward-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    
-    .reward-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--accent-orange);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 20px;
-    }
-    
-    .reward-text {
-      font-size: 16px;
-      font-weight: 600;
-      color: #333;
-    }
-    
-    .reward-btn {
-      background: var(--accent-orange);
-      color: white;
+    .search-input {
+      flex: 1;
       border: none;
+      outline: none;
+      font-size: 16px;
+      color: #333;
+      background: transparent;
+    }
+    
+    .search-input::placeholder {
+      color: #999;
+    }
+    
+    /* 필터 버튼 */
+    .filter-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+      padding: 0 20px;
+    }
+    
+    .filter-btn {
+      background: white;
+      border: 1px solid #e0e0e0;
       border-radius: 20px;
-      padding: 10px 20px;
+      padding: 8px 16px;
       font-size: 14px;
-      font-weight: 600;
+      color: #666;
       cursor: pointer;
       transition: all 0.3s ease;
+      white-space: nowrap;
     }
     
-    .reward-btn:hover {
+    .filter-btn.active {
       background: var(--accent-color);
+      color: white;
+      border-color: var(--accent-color);
+    }
+    
+    /* 가게 카드 */
+    .store-list {
+      padding: 0 20px 100px 20px;
+    }
+    
+    .store-item {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 15px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    
+    .store-item:hover {
       transform: translateY(-2px);
     }
     
-    /* 액션 버튼 */
-    .action-buttons {
-      display: flex;
-      justify-content: flex-end;
-      gap: 15px;
-      margin: 0 20px 20px 20px;
-    }
-    
-    .action-btn {
-      background: none;
-      border: none;
-      font-size: 20px;
-      cursor: pointer;
-      color: #666;
-      transition: color 0.3s ease;
-    }
-    
-    .action-btn:hover {
-      color: var(--accent-color);
-    }
-    
-    /* 탭 네비게이션 */
-    .tab-navigation {
-      display: flex;
-      margin: 0 20px 20px 20px;
-      background: #f0f0f0;
-      border-radius: 12px;
-      padding: 4px;
-    }
-    
-    .tab-btn {
-      flex: 1;
-      background: none;
-      border: none;
-      padding: 12px 16px;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      color: #666;
-    }
-    
-    .tab-btn.active {
-      background: white;
-      color: var(--accent-color);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    
-    /* 콘텐츠 섹션 */
-    .content-section {
-      margin: 0 20px 20px 20px;
-    }
-    
-    .section-title {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 20px;
-      color: #333;
-    }
-    
-    /* 효능과 영양 탭 */
-    .benefits-content {
-      background: white;
-      border-radius: 16px;
-      padding: 25px;
-      box-shadow: var(--shadow);
-    }
-    
-    .food-item {
-      margin-bottom: 30px;
-    }
-    
-    .food-item:last-child {
-      margin-bottom: 0;
-    }
-    
-    .food-header {
+    .store-header {
       display: flex;
       align-items: center;
       margin-bottom: 15px;
     }
     
-    .food-number {
-      background: var(--accent-color);
-      color: white;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
+    .store-image {
+      width: 60px;
+      height: 60px;
+      background: #f0f0f0;
+      border-radius: 12px;
+      margin-right: 15px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
-      font-weight: 700;
-      margin-right: 15px;
+      font-size: 24px;
     }
     
-    .food-name {
-      font-size: 18px;
-      font-weight: 700;
-      color: #333;
-    }
-    
-    .food-description {
-      font-size: 15px;
-      line-height: 1.6;
-      color: #666;
-      margin-bottom: 15px;
-    }
-    
-    .benefits-list {
-      list-style: none;
-    }
-    
-    .benefits-list li {
-      position: relative;
-      padding-left: 25px;
-      margin-bottom: 10px;
-      font-size: 14px;
-      color: #555;
-    }
-    
-    .benefits-list li::before {
-      content: "✓";
-      position: absolute;
-      left: 0;
-      color: var(--accent-color);
-      font-weight: bold;
-      font-size: 16px;
-    }
-    
-    /* 추천 가게 탭 */
-    .stores-content {
-      display: none;
-    }
-    
-    .store-card {
-      background: white;
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 15px;
-      box-shadow: var(--shadow);
+    .store-info {
+      flex: 1;
     }
     
     .store-name {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 700;
       color: #333;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
+    }
+    
+    .store-category {
+      font-size: 14px;
+      color: var(--accent-color);
+      margin-bottom: 5px;
+    }
+    
+    .store-rating {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .stars {
+      color: #FFD700;
+      font-size: 14px;
+    }
+    
+    .rating-text {
+      font-size: 14px;
+      color: #666;
     }
     
     .store-description {
@@ -345,82 +202,18 @@
       margin-bottom: 15px;
     }
     
-    .store-images {
+    .store-tags {
       display: flex;
-      gap: 10px;
-      margin-bottom: 15px;
+      gap: 8px;
+      flex-wrap: wrap;
     }
     
-    .store-image {
-      width: 80px;
-      height: 80px;
+    .tag {
       background: #f0f0f0;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #999;
+      color: #666;
+      padding: 4px 8px;
+      border-radius: 12px;
       font-size: 12px;
-    }
-    
-    .store-btn {
-      background: var(--accent-color);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 10px 20px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    
-    .store-btn:hover {
-      background: var(--accent-light);
-    }
-    
-    /* 궁합 재료 탭 */
-    .combination-content {
-      display: none;
-    }
-    
-    .combination-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-    
-    .combination-item {
-      text-align: center;
-    }
-    
-    .combination-icon {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      margin: 0 auto 8px auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      color: white;
-      font-weight: bold;
-    }
-    
-    .combination-name {
-      font-size: 12px;
-      font-weight: 600;
-      color: #333;
-    }
-    
-    .view-more {
-      text-align: center;
-      color: var(--accent-color);
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      padding: 15px 0;
     }
     
     /* 하단 네비게이션 */
@@ -446,6 +239,8 @@
       gap: 5px;
       cursor: pointer;
       transition: color 0.3s ease;
+      text-decoration: none;
+      color: inherit;
     }
     
     .nav-icon {
@@ -470,26 +265,12 @@
         max-width: 100%;
       }
       
-      .main-banner {
-        margin: 15px;
-        padding: 20px;
+      .store-list {
+        padding: 0 15px 100px 15px;
       }
       
-      .banner-title {
-        font-size: 20px;
-      }
-      
-      .reward-section {
-        margin: 0 15px 15px 15px;
-        padding: 15px;
-      }
-      
-      .tab-navigation {
-        margin: 0 15px 15px 15px;
-      }
-      
-      .content-section {
-        margin: 0 15px 15px 15px;
+      .filter-buttons {
+        padding: 0 15px;
       }
     }
   </style>
@@ -507,228 +288,165 @@
   
   <!-- 헤더 -->
   <div class="header">
-    <button class="back-btn">←</button>
-    <div class="header-title">제철음식 안내</div>
-  </div>
-  
-  <!-- 메인 배너 -->
-  <div class="main-banner">
-    <div class="banner-bg"></div>
-    <div class="week-selector">11월 3주차</div>
-    <div class="banner-title">춥지만 달달한 딸기의 계절!</div>
-    <div class="banner-date">2.1 (목) ~ 2.29 (목)</div>
-  </div>
-  
-  <!-- 리워드 섹션 -->
-  <div class="reward-section">
-    <div class="reward-left">
-      <div class="reward-icon">🥕</div>
-      <div class="reward-text">춥지만 달달한 딸기의 계절!</div>
+    <div class="page-title">가게</div>
+    <div class="search-container">
+      <div class="search-icon">🔍</div>
+      <input type="text" class="search-input" placeholder="가게 검색하기">
     </div>
-    <button class="reward-btn">인증하고 뱃지받기 ></button>
   </div>
   
-  <!-- 액션 버튼 -->
-  <div class="action-buttons">
-    <button class="action-btn">📤</button>
-    <button class="action-btn">❤️</button>
+  <!-- 필터 버튼 -->
+  <div class="filter-buttons">
+    <div class="filter-btn active" onclick="filterStores('all')">전체</div>
+    <div class="filter-btn" onclick="filterStores('korean')">한식</div>
+    <div class="filter-btn" onclick="filterStores('japanese')">일식</div>
+    <div class="filter-btn" onclick="filterStores('chinese')">중식</div>
+    <div class="filter-btn" onclick="filterStores('western')">양식</div>
+    <div class="filter-btn" onclick="filterStores('cafe')">카페</div>
   </div>
   
-  <!-- 탭 네비게이션 -->
-  <div class="tab-navigation">
-    <button class="tab-btn active" onclick="showTab('benefits')">효능과 영양</button>
-    <button class="tab-btn" onclick="showTab('stores')">추천 가게</button>
-    <button class="tab-btn" onclick="showTab('combination')">궁합 재료</button>
-  </div>
-  
-  <!-- 콘텐츠 섹션 -->
-  <div class="content-section">
-    <!-- 효능과 영양 탭 -->
-    <div id="benefits-tab" class="benefits-content">
-      <div class="food-item">
-        <div class="food-header">
-          <div class="food-number">01</div>
-          <div class="food-name">딸기의 영양과 효능</div>
+  <!-- 가게 목록 -->
+  <div class="store-list">
+    <div class="store-item" onclick="goToStoreDetail('oroti')">
+      <div class="store-header">
+        <div class="store-image">🍣</div>
+        <div class="store-info">
+          <div class="store-name">오롯이 스시</div>
+          <div class="store-category">일식 • 스시</div>
+          <div class="store-rating">
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <div class="rating-text">4.8 (127)</div>
+          </div>
         </div>
-        <div class="food-description">
-          딸기는 과일 중 비타민C 함량이 가장 높아(100g당 80mg) 5~6개만으로 하루 필요한 비타민C를 모두 섭취할 수 있습니다. 또한, 딸기에는 붉은 과일에 주로 들어있는 라이코펜이 많으며, 라이코펜은 면역력을 높이고 혈관을 튼튼하게 하여 노화를 방지하는 것으로 알려져 있습니다.
-        </div>
-        <ul class="benefits-list">
-          <li>비타민C가 풍부해 면역력 증진</li>
-          <li>항산화 효과와 노화 방지</li>
-          <li>피부 건강과 미백 효과</li>
-          <li>혈관 건강 증진</li>
-          <li>시력 회복에 효과적</li>
-        </ul>
       </div>
-      
-      <div class="food-item">
-        <div class="food-header">
-          <div class="food-number">02</div>
-          <div class="food-name">딸기 섭취 시 주의사항</div>
-        </div>
-        <div class="food-description">
-          딸기는 알레르기 반응을 일으킬 수 있으므로 처음 먹는 사람은 소량부터 시작하는 것이 좋습니다. 또한, 딸기의 씨앗이 장에 자극을 줄 수 있으므로 과다 섭취는 피해야 합니다.
-        </div>
-        <ul class="benefits-list">
-          <li>알레르기 반응 주의</li>
-          <li>소량부터 섭취 시작</li>
-          <li>과다 섭취 금지</li>
-          <li>신선한 딸기 선택</li>
-        </ul>
+      <div class="store-description">
+        신선한 재료로 만드는 정통 스시 전문점입니다. 매일 아침 입고되는 신선한 생선으로 최고의 맛을 선사합니다.
+      </div>
+      <div class="store-tags">
+        <div class="tag">신선한 재료</div>
+        <div class="tag">정통 스시</div>
+        <div class="tag">예약 가능</div>
       </div>
     </div>
     
-    <!-- 추천 가게 탭 -->
-    <div id="stores-tab" class="stores-content">
-      <div class="store-card">
-        <div class="store-name">화이트 브릭스</div>
-        <div class="store-description">
-          2017년 성수동에 오픈한 화이트 브릭스는 건강한 식사를 선보이며 많은 사람들이 즐겨 찾는 곳이 되었습니다. 딸기 케이크와 딸기 요거트가 특히 유명합니다.
+    <div class="store-item" onclick="goToStoreDetail('dandachi')">
+      <div class="store-header">
+        <div class="store-image">🍣</div>
+        <div class="store-info">
+          <div class="store-name">단 다찌 스시</div>
+          <div class="store-category">일식 • 스시</div>
+          <div class="store-rating">
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <div class="rating-text">4.6 (89)</div>
+          </div>
         </div>
-        <div class="store-images">
-          <div class="store-image">🍰</div>
-          <div class="store-image">🥛</div>
-        </div>
-        <button class="store-btn">브랜드 자세히 보기 ></button>
       </div>
-      
-      <div class="store-card">
-        <div class="store-name">브럭시</div>
-        <div class="store-description">
-          과즙이 흘러넘치는 과일과 고소한 버터번이 매력적인 정통 케이크 브랜드, 브럭시입니다. 간편하지만 푸짐한 케이크를 간편하게 즐길 수 있습니다.
-        </div>
-        <div class="store-images">
-          <div class="store-image">🍓</div>
-          <div class="store-image">🧀</div>
-        </div>
-        <button class="store-btn">브랜드 자세히 보기 ></button>
+      <div class="store-description">
+        창의적인 스시 조합과 현대적인 분위기가 어우러진 트렌디한 스시바입니다.
+      </div>
+      <div class="store-tags">
+        <div class="tag">창의적 조합</div>
+        <div class="tag">트렌디</div>
+        <div class="tag">와인 페어링</div>
       </div>
     </div>
     
-    <!-- 궁합 재료 탭 -->
-    <div id="combination-tab" class="combination-content">
-      <div class="section-title">궁합이 좋은 음식</div>
-      <div class="combination-grid">
-        <div class="combination-item">
-          <div class="combination-icon" style="background: #FFB3BA;">🍑</div>
-          <div class="combination-name">복숭아</div>
-        </div>
-        <div class="combination-item">
-          <div class="combination-icon" style="background: #90EE90;">🌿</div>
-          <div class="combination-name">미나리</div>
-        </div>
-        <div class="combination-item">
-          <div class="combination-icon" style="background: #F4E4BC;">🍚</div>
-          <div class="combination-name">쌀</div>
-        </div>
-        <div class="combination-item">
-          <div class="combination-icon" style="background: #FFB366;">🥔</div>
-          <div class="combination-name">감자</div>
-        </div>
-        <div class="combination-item">
-          <div class="combination-icon" style="background: #F4E4BC;">🍚</div>
-          <div class="combination-name">쌀</div>
-        </div>
-        <div class="combination-item">
-          <div class="combination-icon" style="background: #FFB3BA;">🍑</div>
-          <div class="combination-name">복숭아</div>
-        </div>
-        <div class="combination-item">
-          <div class="combination-icon" style="background: #FFB366;">🥔</div>
-          <div class="combination-name">감자</div>
-        </div>
-        <div class="combination-item">
-          <div class="combination-icon" style="background: #90EE90;">🌿</div>
-          <div class="combination-name">미나리</div>
+    <div class="store-item" onclick="goToStoreDetail('whitebrix')">
+      <div class="store-header">
+        <div class="store-image">🍰</div>
+        <div class="store-info">
+          <div class="store-name">화이트 브릭스</div>
+          <div class="store-category">카페 • 베이커리</div>
+          <div class="store-rating">
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <div class="rating-text">4.7 (156)</div>
+          </div>
         </div>
       </div>
-      <div class="view-more">펼쳐서 보기 ▼</div>
+      <div class="store-description">
+        2017년 성수동에 오픈한 건강한 식사를 선보이는 베이커리 카페입니다.
+      </div>
+      <div class="store-tags">
+        <div class="tag">건강한 식사</div>
+        <div class="tag">베이커리</div>
+        <div class="tag">브런치</div>
+      </div>
+    </div>
+    
+    <div class="store-item" onclick="goToStoreDetail('bruxie')">
+      <div class="store-header">
+        <div class="store-image">🧀</div>
+        <div class="store-info">
+          <div class="store-name">브럭시</div>
+          <div class="store-category">카페 • 케이크</div>
+          <div class="store-rating">
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <div class="rating-text">4.5 (203)</div>
+          </div>
+        </div>
+      </div>
+      <div class="store-description">
+        과즙이 흘러넘치는 과일과 고소한 버터번이 매력적인 정통 케이크 브랜드입니다.
+      </div>
+      <div class="store-tags">
+        <div class="tag">정통 케이크</div>
+        <div class="tag">과일 케이크</div>
+        <div class="tag">디저트</div>
+      </div>
     </div>
   </div>
   
   <!-- 하단 네비게이션 -->
   <div class="bottom-nav">
-    <div class="nav-item active">
+    <a href="index.html" class="nav-item">
       <div class="nav-icon">🏠</div>
       <div class="nav-text">홈</div>
-    </div>
-    <div class="nav-item">
+    </a>
+    <a href="store.html" class="nav-item active">
       <div class="nav-icon">📍</div>
       <div class="nav-text">가게</div>
-    </div>
-    <div class="nav-item">
+    </a>
+    <a href="calendar.html" class="nav-item">
       <div class="nav-icon">📅</div>
       <div class="nav-text">달력</div>
-    </div>
-    <div class="nav-item">
+    </a>
+    <a href="my.html" class="nav-item">
       <div class="nav-icon">👤</div>
       <div class="nav-text">마이</div>
-    </div>
-    <div class="nav-item">
+    </a>
+    <a href="badge.html" class="nav-item">
       <div class="nav-icon">🏆</div>
       <div class="nav-text">뱃지</div>
-    </div>
+    </a>
   </div>
 
   <script>
-    // 탭 전환 함수
-    function showTab(tabName) {
-      // 모든 탭 버튼 비활성화
-      document.querySelectorAll('.tab-btn').forEach(btn => {
+    // 필터 기능
+    function filterStores(category) {
+      // 필터 버튼 활성화 상태 변경
+      document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.classList.remove('active');
       });
-      
-      // 모든 탭 콘텐츠 숨기기
-      document.getElementById('benefits-tab').style.display = 'none';
-      document.getElementById('stores-tab').style.display = 'none';
-      document.getElementById('combination-tab').style.display = 'none';
-      
-      // 선택된 탭 활성화
       event.target.classList.add('active');
       
-      // 선택된 탭 콘텐츠 보이기
-      document.getElementById(tabName + '-tab').style.display = 'block';
+      // 실제 필터링 로직 (현재는 알림만 표시)
+      alert(`${category} 카테고리로 필터링됩니다!`);
     }
     
-    // 하단 네비게이션 클릭 이벤트
-    document.querySelectorAll('.nav-item').forEach(item => {
-      item.addEventListener('click', function() {
-        document.querySelectorAll('.nav-item').forEach(nav => {
-          nav.classList.remove('active');
-        });
-        this.classList.add('active');
-      });
-    });
+    // 가게 상세 페이지로 이동
+    function goToStoreDetail(storeName) {
+      alert(`${storeName} 상세 페이지로 이동합니다!`);
+      // 실제로는 window.location.href = `store-detail.html?store=${storeName}`; 사용
+    }
     
-    // 리워드 버튼 클릭 이벤트
-    document.querySelector('.reward-btn').addEventListener('click', function() {
-      alert('뱃지 인증이 완료되었습니다! 🏆');
-    });
-    
-    // 뒤로가기 버튼 클릭 이벤트
-    document.querySelector('.back-btn').addEventListener('click', function() {
-      if (confirm('이전 페이지로 돌아가시겠습니까?')) {
-        window.history.back();
+    // 검색 기능
+    document.querySelector('.search-input').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        const searchTerm = this.value;
+        if (searchTerm.trim()) {
+          alert(`"${searchTerm}" 검색 결과를 보여드립니다!`);
+        }
       }
-    });
-    
-    // 공유 버튼 클릭 이벤트
-    document.querySelectorAll('.action-btn')[0].addEventListener('click', function() {
-      if (navigator.share) {
-        navigator.share({
-          title: '제철음식 안내 - 딸기의 계절',
-          text: '춥지만 달달한 딸기의 계절! 제철음식의 효능을 확인해보세요.',
-          url: window.location.href
-        });
-      } else {
-        alert('공유 기능이 지원되지 않는 브라우저입니다.');
-      }
-    });
-    
-    // 좋아요 버튼 클릭 이벤트
-    document.querySelectorAll('.action-btn')[1].addEventListener('click', function() {
-      this.style.color = this.style.color === 'red' ? '#666' : 'red';
     });
   </script>
 </body>
