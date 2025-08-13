@@ -1,36 +1,508 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Seasonal · 제철 퀴즈</title>
-  <link rel="stylesheet" href="game.css" />
+  <meta charset="UTF-8">
+  <title>Seasonal - 달력</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+  <style>
+    :root {
+      --main-bg: #f8f9fa;
+      --card-bg: #fff;
+      --main-text: #333;
+      --accent-color: #FF6B35;
+      --accent-light: #FF8A65;
+      --accent-orange: #FF9800;
+      --border-radius: 16px;
+      --shadow: 0 4px 20px rgba(0,0,0,0.1);
+      --shadow-hover: 0 8px 30px rgba(0,0,0,0.15);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Pretendard', Arial, sans-serif;
+      background: var(--main-bg);
+      color: var(--main-text);
+      line-height: 1.6;
+      max-width: 430px;
+      margin: 0 auto;
+      min-height: 100vh;
+    }
+    
+    /* 상단 상태바 */
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background: var(--main-bg);
+      font-size: 14px;
+      font-weight: 600;
+    }
+    
+    .status-left {
+      color: #333;
+    }
+    
+    .status-right {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+    
+    /* 헤더 */
+    .header {
+      padding: 20px;
+      background: var(--main-bg);
+    }
+    
+    .page-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    
+    /* 달력 네비게이션 */
+    .calendar-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .nav-btn {
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    
+    .nav-btn:hover {
+      background: var(--accent-light);
+    }
+    
+    .current-month {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--accent-color);
+    }
+    
+    /* 달력 */
+    .calendar-container {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      margin: 0 20px 20px 20px;
+      box-shadow: var(--shadow);
+    }
+    
+    .calendar {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .calendar th {
+      background: var(--accent-color);
+      color: white;
+      padding: 12px 8px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    
+    .calendar td {
+      border: 1px solid #e0e0e0;
+      padding: 12px 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      position: relative;
+      font-size: 14px;
+    }
+    
+    .calendar td:hover {
+      background: #f0f8f0;
+    }
+    
+    .calendar td.today {
+      background: var(--accent-light);
+      color: white;
+      font-weight: bold;
+    }
+    
+    .calendar td.other-month {
+      color: #ccc;
+    }
+    
+    .calendar td.has-food {
+      background: #fff3e0;
+      font-weight: 600;
+    }
+    
+    .calendar td.has-food::after {
+      content: "🍎";
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      font-size: 10px;
+    }
+    
+    /* 제철음식 정보 */
+    .seasonal-info {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      margin: 0 20px 20px 20px;
+      box-shadow: var(--shadow);
+    }
+    
+    .info-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent-color);
+      margin-bottom: 15px;
+    }
+    
+    .food-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 15px;
+    }
+    
+    .food-item {
+      text-align: center;
+      padding: 15px;
+      background: #f9f9f9;
+      border-radius: 12px;
+      transition: transform 0.2s ease;
+    }
+    
+    .food-item:hover {
+      transform: translateY(-2px);
+    }
+    
+    .food-icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+    
+    .food-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 5px;
+    }
+    
+    .food-season {
+      font-size: 12px;
+      color: var(--accent-color);
+    }
+    
+    /* 하단 네비게이션 */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 430px;
+      background: white;
+      border-top: 1px solid #e0e0e0;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+    
+    .nav-icon {
+      font-size: 20px;
+      color: #999;
+    }
+    
+    .nav-text {
+      font-size: 12px;
+      color: #999;
+      font-weight: 500;
+    }
+    
+    .nav-item.active .nav-icon,
+    .nav-item.active .nav-text {
+      color: var(--accent-color);
+    }
+    
+    /* 반응형 */
+    @media (max-width: 430px) {
+      body {
+        max-width: 100%;
+      }
+      
+      .calendar-container,
+      .seasonal-info {
+        margin: 0 15px 15px 15px;
+        padding: 15px;
+      }
+      
+      .calendar td,
+      .calendar th {
+        padding: 8px 4px;
+        font-size: 12px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="wrap">
-    <header class="top">
-      <a class="back" href="../../index.html">← 홈</a>
-      <h1>제철 퀴즈</h1>
-    </header>
-
-    <section class="card" id="quiz">
-      <div class="meta">5문제 · 3개 이상 정답 시 배지 획득</div>
-      <div id="qtext" class="qtext"></div>
-      <div id="opts" class="opts"></div>
-      <button id="next" class="next" disabled>다음</button>
-    </section>
-
-    <section class="card hide" id="result">
-      <h2 id="score"></h2>
-      <div id="badgeArea"></div>
-      <div class="row">
-        <button id="retry">다시 도전</button>
-        <button id="shareBadge" class="primary">배지 자랑하기</button>
-      </div>
-    </section>
+  <!-- 상단 상태바 -->
+  <div class="status-bar">
+    <div class="status-left">9:41</div>
+    <div class="status-right">
+      <span>📶</span>
+      <span>📶</span>
+      <span>🔋</span>
+    </div>
   </div>
-  <canvas id="badgeCanvas" class="hide"></canvas>
-  <script src="game.js"></script>
+  
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="page-title">달력</div>
+  </div>
+  
+  <!-- 달력 -->
+  <div class="calendar-container">
+    <div class="calendar-nav">
+      <button class="nav-btn" onclick="previousMonth()">◀ 이전</button>
+      <div class="current-month" id="currentMonth">2024년 11월</div>
+      <button class="nav-btn" onclick="nextMonth()">다음 ▶</button>
+    </div>
+    
+    <table class="calendar" id="calendar">
+      <thead>
+        <tr>
+          <th>일</th>
+          <th>월</th>
+          <th>화</th>
+          <th>수</th>
+          <th>목</th>
+          <th>금</th>
+          <th>토</th>
+        </tr>
+      </thead>
+      <tbody id="calendarBody">
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- 제철음식 정보 -->
+  <div class="seasonal-info">
+    <div class="info-title">🍎 11월 제철음식</div>
+    <div class="food-grid">
+      <div class="food-item">
+        <div class="food-icon">🍊</div>
+        <div class="food-name">귤</div>
+        <div class="food-season">11월 제철</div>
+      </div>
+      <div class="food-item">
+        <div class="food-icon">🍐</div>
+        <div class="food-name">배</div>
+        <div class="food-season">11월 제철</div>
+      </div>
+      <div class="food-item">
+        <div class="food-icon">🍊</div>
+        <div class="food-name">단감</div>
+        <div class="food-season">11월 제철</div>
+      </div>
+      <div class="food-item">
+        <div class="food-icon">🥕</div>
+        <div class="food-name">무</div>
+        <div class="food-season">11월 제철</div>
+      </div>
+      <div class="food-item">
+        <div class="food-icon">🥬</div>
+        <div class="food-name">배추</div>
+        <div class="food-season">11월 제철</div>
+      </div>
+      <div class="food-item">
+        <div class="food-icon">🧅</div>
+        <div class="food-name">양파</div>
+        <div class="food-season">11월 제철</div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 하단 네비게이션 -->
+  <div class="bottom-nav">
+    <a href="index.html" class="nav-item">
+      <div class="nav-icon">🏠</div>
+      <div class="nav-text">홈</div>
+    </a>
+    <a href="store.html" class="nav-item">
+      <div class="nav-icon">📍</div>
+      <div class="nav-text">가게</div>
+    </a>
+    <a href="calendar.html" class="nav-item active">
+      <div class="nav-icon">📅</div>
+      <div class="nav-text">달력</div>
+    </a>
+    <a href="my.html" class="nav-item">
+      <div class="nav-icon">👤</div>
+      <div class="nav-text">마이</div>
+    </a>
+    <a href="badge.html" class="nav-item">
+      <div class="nav-icon">🏆</div>
+      <div class="nav-text">뱃지</div>
+    </a>
+  </div>
+
+  <script>
+    let currentDate = new Date();
+    let currentMonth = currentDate.getMonth();
+    let currentYear = currentDate.getFullYear();
+    
+    // 제철음식 데이터
+    const seasonalFoods = {
+      0: ["귤", "배", "단감"], // 1월
+      1: ["딸기", "미나리", "우엉"], // 2월
+      2: ["봄나물", "달래", "쑥"], // 3월
+      3: ["참나물", "두릅", "취나물"], // 4월
+      4: ["체리", "아스파라거스", "새싹채소"], // 5월
+      5: ["복숭아", "오이", "가지"], // 6월
+      6: ["수박", "참외", "옥수수"], // 7월
+      7: ["포도", "복분자", "고구마"], // 8월
+      8: ["사과", "배", "무"], // 9월
+      9: ["감", "고구마", "단호박"], // 10월
+      10: ["귤", "배", "무"], // 11월
+      11: ["귤", "배", "단감"] // 12월
+    };
+    
+    // 달력 생성 함수
+    function generateCalendar(year, month) {
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+      const startDate = new Date(firstDay);
+      startDate.setDate(startDate.getDate() - firstDay.getDay());
+      
+      const calendarBody = document.getElementById('calendarBody');
+      calendarBody.innerHTML = '';
+      
+      const currentMonthText = document.getElementById('currentMonth');
+      const monthNames = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
+      currentMonthText.textContent = `${year}년 ${monthNames[month]}`;
+      
+      let currentRow = document.createElement('tr');
+      
+      for (let i = 0; i < 42; i++) {
+        const currentDate = new Date(startDate);
+        currentDate.setDate(startDate.getDate() + i);
+        
+        if (i % 7 === 0 && i !== 0) {
+          calendarBody.appendChild(currentRow);
+          currentRow = document.createElement('tr');
+        }
+        
+        const cell = document.createElement('td');
+        cell.textContent = currentDate.getDate();
+        
+        // 오늘 날짜 표시
+        const today = new Date();
+        if (currentDate.toDateString() === today.toDateString()) {
+          cell.classList.add('today');
+        }
+        
+        // 다른 달의 날짜 표시
+        if (currentDate.getMonth() !== month) {
+          cell.classList.add('other-month');
+        }
+        
+        // 제철음식이 있는 날짜 표시
+        const foods = seasonalFoods[month];
+        if (foods && foods.length > 0) {
+          cell.classList.add('has-food');
+          cell.title = `제철음식: ${foods.join(', ')}`;
+        }
+        
+        // 날짜 클릭 이벤트
+        cell.onclick = function() {
+          showDateInfo(currentDate, foods);
+        };
+        
+        currentRow.appendChild(cell);
+      }
+      
+      calendarBody.appendChild(currentRow);
+    }
+    
+    // 날짜 정보 표시
+    function showDateInfo(date, foods) {
+      const monthNames = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
+      const dayNames = ['일', '월', '화', '수', '목', '금', '토'];
+      
+      let message = `${date.getFullYear()}년 ${monthNames[date.getMonth()]} ${date.getDate()}일 (${dayNames[date.getDay()]})`;
+      
+      if (foods && foods.length > 0) {
+        message += `\n\n🍎 제철음식: ${foods.join(', ')}`;
+      } else {
+        message += '\n\n이 날은 특별한 제철음식이 없습니다.';
+      }
+      
+      alert(message);
+    }
+    
+    // 이전 달
+    function previousMonth() {
+      currentMonth--;
+      if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+      }
+      generateCalendar(currentYear, currentMonth);
+      updateSeasonalInfo(currentMonth);
+    }
+    
+    // 다음 달
+    function nextMonth() {
+      currentMonth++;
+      if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+      }
+      generateCalendar(currentYear, currentMonth);
+      updateSeasonalInfo(currentMonth);
+    }
+    
+    // 제철음식 정보 업데이트
+    function updateSeasonalInfo(month) {
+      const monthNames = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
+      const infoTitle = document.querySelector('.info-title');
+      infoTitle.textContent = `🍎 ${monthNames[month]} 제철음식`;
+      
+      // 실제로는 여기서 해당 월의 제철음식 데이터를 동적으로 업데이트
+    }
+    
+    // 초기화
+    window.onload = function() {
+      generateCalendar(currentYear, currentMonth);
+    };
+  </script>
 </body>
 </html>
- 
